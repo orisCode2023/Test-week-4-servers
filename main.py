@@ -21,12 +21,31 @@ def get_test_name(name: str):
 
 # @app.post("/caesar")
 # def get_decrypt_ot_encrypt():
-#     pass
+#     return { "text": string, "offset": int, "mode": "encrypt"/”decrypt”  }
 
-# @app.get()
-# def encrypt(text: str):
-#     pass
+@app.get("/caesar/encrypt")
+def encrypt_ceaser(text: str):
+    text = text.lower()
+    encrypt = ""
+    for char in text:
+        if char == 'z':
+            encrypt += 'b'
+        elif char == 'y':
+            encrypt += 'a'
+        else:
+            print(chr(ord(char) + 2))
+            encrypt += chr(ord(char) + 2)
 
-# @app.post()
-# def decrypt():
-#     pass
+    return {"encrypted_text": encrypt}
+
+@app.post("/caesar/decrypt")
+def decrypt(text: str):
+    decrypt_txt = ""
+    for char in text:
+        if char == 'b':
+            decrypt_txt += 'z'
+        elif char == 'a':
+            decrypt_txt += 'y'
+        else:
+            decrypt_txt += chr(ord(char) - 2)
+    return {"decrypted_text": decrypt_txt }
